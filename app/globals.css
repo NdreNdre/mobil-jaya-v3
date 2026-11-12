@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html { scroll-behavior: smooth; }
+body { font-size: 18px; line-height: 1.6; color: #1f2937; }
+section[id] { scroll-margin-top: 80px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+:focus-visible { outline: 3px solid #F59E0B; outline-offset: 2px; }
+
+/* ===== Animasi ===== */
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes ring { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(1.6); opacity: 0; } }
+
+.rise { animation: rise .9s cubic-bezier(.22,1,.36,1) var(--d, 0ms) both; }
+.float { animation: floaty 5s ease-in-out infinite; }
+
+.js [data-reveal] { opacity: 0; transform: translateY(26px);
+  transition: opacity .8s cubic-bezier(.22,1,.36,1) var(--d, 0ms), transform .8s cubic-bezier(.22,1,.36,1) var(--d, 0ms); }
+.js [data-reveal].in { opacity: 1; transform: none; }
+.js [data-reveal].done { transition: transform .3s ease, box-shadow .3s ease, opacity .3s; }
+
+.card { transition: transform .3s ease, box-shadow .3s ease; }
+.card:hover, .js [data-reveal].in.card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px -14px rgba(30,58,95,.3); }
+
+details[open] > p { animation: fadeDown .35s ease both; }
+details[open] > div.menu { animation: fadeDown .2s ease both; }
+
+.wa-pulse::after { content: ""; position: absolute; inset: 0; border-radius: 9999px; background: #25D366; z-index: -1; animation: ring 2.4s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .float, .wa-pulse::after { animation: none; }
+  .js [data-reveal], .js [data-reveal].in { opacity: 1; transform: none; transition: none; }
+  .card:hover { transform: none; }
+}
+
+.rise-in { animation: rise .6s cubic-bezier(.22,1,.36,1) var(--d, 0ms) backwards; }
+@media (prefers-reduced-motion: reduce) { .rise-in { animation: none; } }
+
+/* ===== V2: gaya korporat ===== */
+@keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.14); } }
+@keyframes lineUp { to { transform: none; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.kb { animation: kenburns 20s ease-in-out infinite alternate; }
+.line { display: block; overflow: hidden; padding-bottom: .08em; }
+.line > span { display: block; transform: translateY(110%); animation: lineUp 1s cubic-bezier(.22,1,.36,1) var(--d, 0ms) forwards; }
+.marquee { display: flex; width: max-content; animation: marquee 50s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .kb, .marquee { animation: none; }
+  .line > span { transform: none; animation: none; }
+  .marquee-wrap { overflow-x: auto; }
+}
